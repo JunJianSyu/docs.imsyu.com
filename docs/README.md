@@ -7,10 +7,3 @@
 <div align="center" style="font-size: 16px;">
     JunJianSyu a document record
 </div>
-
-## Directory
-
-
-## License
-
-MIT
