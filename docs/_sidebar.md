@@ -1,1 +1,2 @@
 - [Shadowsocks配置](ss.md)
+- [Vim配置、命令](vim.md)

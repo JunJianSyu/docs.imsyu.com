@@ -1,5 +1,5 @@
 > Author: JunJianSyu <br />
-> Date: 2017.3.13
+> Slogan: Stay focused and keep shipping.
 
 ##  Shadowsocks
 
