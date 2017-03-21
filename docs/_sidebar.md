@@ -1,3 +1,4 @@
 - [Shadowsocks配置](ss.md)
 - [Vim配置、命令](vim.md)
 - [单元测试](unitest.md)
+- [排序算法集锦](sort_ALG.md)
