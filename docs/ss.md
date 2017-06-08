@@ -118,4 +118,68 @@ net.ipv4.tcp_congestion_control = hybla
 
 记得执行`sysctl -p`重新加载配置
 
+#### 附言 PPTP VPN搭建(linux + Debian)
 
+1. 更新软件包 安装 pptpd
+```bash
+apt-get update
+apt-get install -y pptpd
+```
+
+2. 编辑`/etc/pptpd.conf`,在文件最后添加
+```bash
+localip 192.168.92.1
+remoteip 192.168.92.11-16
+```
+localip 是vpn服务器的地址
+remoteip 是vpn客户端的地址, 可以配置成一个地址范围
+
+3. 编辑`/etc/ppp/pptpd-options`
+```bash
+name pptpd
+refuse-app
+refuse-chap
+refuse-mschap
+require-mschap-v2
+require-mppe-128
+ms-dns 8.8.8.8
+ms-dns 8.8.4.4
+#nodefaultroute
+#debug
+#dump
+proxyarp
+lock
+nobsdcomp
+#nologfd
+logfile /var/log/pptpd.log
+```
+文件其他的配置可通通注释掉
+
+4. 编辑`/etc/ppp/chap-secrets`, 添加账户
+```bash
+username pptpd password *
+```
+用户名 vpn服务程序 密码 分配ip地址
+
+5. 编辑`/etc/sysctl.conf`
+```bash
+net.ipv4.ip_forward = 1
+```
+去掉'#'取消注释, 执行命令使配置生效
+```bash
+sysctl -p
+```
+
+6. 编辑`/etc/rc.local`, 系统启动时添加服务
+```bash
+iptables -t nat -A POSTROUTING -s 192.168.92.0/24 -j SNAT --to-source "你的服务器的公开IP"
+```
+添加可执行权限
+```bash
+chmod +x /etc/rc.local
+```
+
+7. 重启服务
+```bash
+/etc/init.d/pptpd restart
+```
