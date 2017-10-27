@@ -313,64 +313,271 @@ static: 常规流
 bootstrap 觉得太重 需要自己定制需要的内容
 
 * 请问你有尝试过 CSS Flexbox 或者 Grid 标准规格吗？
+
+display: flex; 弹性布局
+display: grid; 网格布局
+
 * 为什么响应式设计 (responsive design) 和自适应设计 (adaptive design) 不同？
+
+响应式是嗅探型 自适应是被动型 响应式的思想其实包括了自适应的思想
+
 * 你有兼容 retina 屏幕的经历吗？如果有，在什么地方使用了何种技术？
+
+retina屏幕 1个独立像素 = 2个物理像素
+图片出2倍, 缩小显示, 防止像素虚化
+1px边框 采用viewport + rem 或者使用 伪元素边框 scale做缩放
+
 * 请问为何要使用 `translate()` 而非 *absolute positioning*，或反之的理由？为什么？
+
+使用translate 性能要高于 absolute 因为translate 可以触发渲染引擎加速, 可以实现单流重绘。
 
 #### <a name='js-questions'>JS 相关问题：</a>
 
 * 请解释事件代理 (event delegation)。
+
+利用事件捕获和事件冒泡, 绑定事件到父元素、判定事件捕获的元素,触发回调函数
+
 * 请解释 JavaScript 中 `this` 是如何工作的。
+
+有一句话叫做 'this总是指向引用它的对象' 这是我对this的终极理解
+
 * 请解释原型继承 (prototypal inheritance) 的原理。
+
+js中所有对象都是Object的实例, 对象都有一个prototype属性, 表示自己的原型对象, 通过原型对象的操作赋值继承其他对象的方法, 原型链的末端是null, null没有__proto__
+对象的原型 => Object.prototype => null
+
 * 你怎么看 AMD vs. CommonJS？
+
+AMD 定义异步模块 预加载模块, 加载完成 执行callback define('module_id', [dependence], callback)  require([dependence], callback(...dependence) {})
+
+CJS 为服务器优化的模块格式 exports.a = {} || function () {}   var a = require('a') || import a from 'a'
+
+AMD采用偏向浏览器的开发方式，选择异步行为和简化向后兼容性，但它没有任何文件I/O的概念。它支持在浏览器中本机运行的对象，函数，构造函数，字符串，JSON和许多其他类型的模块。这是非常灵活的。
+
+CommonJS采用偏向服务器方式，迎合服务器上同步的思想, 意思就是，因为CJS支持未封装的模块，它可以感觉到更接近于ES.next/Harmony规范，释放了AMD强制执行的define()包装器。CJS模块只支持对象作为模块。
+
+
 * 请解释为什么接下来这段代码不是 IIFE (立即调用的函数表达式)：`function foo(){ }();`.
+
+因为后面的()执行的并不是一个函数表达式
+
 * 要做哪些改动使它变成 IIFE?
+
+!function foo() {}() 或者 (function foo() {})()
+
 * 描述以下变量的区别：`null`，`undefined` 或 `undeclared`？
+
+null 空值  undefined 未定义 undeclared 未声明
+
+undeclared 变量甚至不存在
+undefined 变量存在，但没有分配值
+null 存在变量并赋值给它们
+
 * 该如何检测它们？
+
+typeof
+Object.prototype.toString.call()
+a instanceof Array || a instanceof Date
+
 * 什么是闭包 (closure)，如何使用它，为什么要使用它？
+
+闭包的创建依赖与函数, 在A函数中创建B函数, B函数中持有对A函数中的变量引用, 最后返回B函数. 由于B函数有对A函数的变量引用, 所以A函数执行完之后, A函数中的变量不会被销毁。
+有了闭包我们可以对外提供访问A函数变量, 由于作用域的关系, 我们无形中创建了私有变量和特权方法.
+闭包最大的用处创建私有变量和特权方法, 变量持久化
+
 * 请举出一个匿名函数的典型用例？
+
+var a = (function (a, b) {
+    // module code
+})()
+
 * 你是如何组织自己的代码？是使用模块模式，还是使用经典继承的方法？
+
+模块模式用的较多, 继承一般用在公用模块
+
 * 请指出 JavaScript 宿主对象 (host objects) 和原生对象 (native objects) 的区别？
+
+宿主对象: js应用在浏览器上 浏览器提供的对象 window、location、document、XMLHttpRequst...
+原生对象: EcmaScript的原生对象 Object、Date、Math...
+
 * 请指出以下代码的区别：`function Person(){}`、`var person = Person()`、`var person = new Person()`？
+
+function Person(){} 构造函数声明
+var person = Person() person的变量的赋值, 如果函数有返回值
+var person = new Person() person实例化Person构造函数
+
+
 * `.call` 和 `.apply` 的区别是什么？
+
+参数传递的区别 call 依次传入 apply []数组传递
+
 * 请解释 `Function.prototype.bind`？
+
+bind创建一个新的函数, bind的第一参数会作为原函数运行时的this指向, 返回由指定的this值和初始化参数改造的原函数拷贝
+
 * 在什么时候你会使用 `document.write()`？
+
+debug
+
 * 请指出浏览器特性检测，特性推断和浏览器 UA 字符串嗅探的区别？
+
+UA是可以伪造的, 最好是用js特性检测
+
 * 请尽可能详尽的解释 Ajax 的工作原理。
+
+浏览器XMLHttpRequest对象, 向服务器发送异步请求, 返回请求结果 根据结果内容用js操作dom
+
 * 使用 Ajax 都有哪些优劣？
+
+使用ajax异步请求数据, 页面不用刷新, 使用异步的方式, 不阻塞用户的操作
+
 * 请解释 JSONP 的工作原理，以及它为什么不是真正的 Ajax。
+
+利用script标签的跨域资源获取, 实现请求, 协定callback函数执行
+jsonp只支持get请求, 而ajax支持各类请求
+
 * 你使用过 JavaScript 模板系统吗？
-  * 如有使用过，请谈谈你都使用过哪些库？
+
+artTemplate 、tmpl
+
+* 如有使用过，请谈谈你都使用过哪些库？
 * 请解释变量声明提升 (hoisting)。
+
+js在预编译期间, 会把上下文中的变量提升到顶部进行声明 赋值undefined, 顺序执行阶段进行真正的赋值操作
+
 * 请描述事件冒泡机制 (event bubbling)。
+
+事件有捕获阶段是按文档流一层一层往下, 冒泡是捕获到触发元素之后 一层一层往上的阶段
+
 * "attribute" 和 "property" 的区别是什么？
+
+attribute是节点上的属性值, property对应节点dom在js的属性
+
 * 为什么扩展 JavaScript 内置对象不是好的做法？
+
+扩展内置对象在协同开发的时候, 方法覆盖。内置对象的污染
+
 * 请指出 document load 和 document DOMContentLoaded 两个事件的区别。
+
+load dom js css 全部加在完毕才触发load事件
+DOMContentLoaded dom文档加载完成后触发
+
 * `==` 和 `===` 有什么不同？
+
+相等 恒等类型也必须一致
+
 * 请解释 JavaScript 的同源策略 (same-origin policy)。
+
+同domain 同端口 同协议 视为在同一个域下
+
 * 如何实现下列代码：
 ```javascript
 [1,2,3,4,5].duplicator(); // [1,2,3,4,5,1,2,3,4,5]
 ```
+```javascript
+Array.prototype.duplicator = function () {
+    return this.concat(this)
+}
+```
+
 * 什么是三元表达式 (Ternary expression)？“三元 (Ternary)” 表示什么意思？
+
+使用3个操作数的表达式叫做三元表达式
+
 * 什么是 `"use strict";` ? 使用它的好处和坏处分别是什么？
+
+js 严格模式 好处是 语法更合理、安全、严谨 坏处是 js进行合并压缩后 use strict 有可能置中
+
 * 请实现一个遍历至 `100` 的 for loop 循环，在能被 `3` 整除时输出 **"fizz"**，在能被 `5` 整除时输出 **"buzz"**，在能同时被 `3` 和 `5` 整除时输出 **"fizzbuzz"**。
+```javascript
+    for (var i = 0; i < 100; i++) {
+        if (i % 3 == 0 && i % 5 == 0) {
+            console.log('fizzbuzz')
+        } else if (i % 3 == 0) {
+            console.log('fizz')
+        } else if (i % 5 == 0) {
+            console.log('buzz')
+        }
+    }
+```
 * 为何通常会认为保留网站现有的全局作用域 (global scope) 不去改变它，是较好的选择？
+
+因为全局变量清理起来很麻烦 IIFE 作用域下的既能不污染全局还能自动清理
+
 * 为何你会使用 `load` 之类的事件 (event)？此事件有缺点吗？你是否知道其他替代品，以及为何使用它们？
+
+load 是等页面dom元素解析完毕,等待加载图片和外部文件后执行, 缺点是网络慢的话 等待时间长, 影响交互。 一般用 DOMContentLoaded, 这个事件是dom元素加载完毕立即执行事件
+
 * 请解释什么是单页应用 (single page app), 以及如何使其对搜索引擎友好 (SEO-friendly)。
+
+单页应用利于搜索引擎检索
+
 * 你使用过 Promises 及其 polyfills 吗? 请写出 Promise 的基本用法（ES6）。
+```javascript
+var _promise = new Promise(function (resolve, reject) {
+    var xhr = new XMLHttpRequest()
+    xhr.open('get', url)
+    xhr.onload = function () {
+        resolve(xhr.responseText)
+    }
+    xhr.onerror = function () {
+        reject(xhr.statusText)
+    }
+    xhr.send()
+})
+
+_promise.then(function (data) {
+    // data value
+    console.log(data)
+}).catch(function (e) {
+    throw e
+})
+```
+
+polyfills 是一种垫片技术, 在没有支持html5一些特性时使用
+
+
 * 使用 Promises 而非回调 (callbacks) 优缺点是什么？
+
+使用Promise代码可读性高, 捕获错误更清晰。避免了回调金字塔的问题, 缺点是then的序列中只能用上层的数据, 除非用变量保存起来
+
 * 使用一种可以编译成 JavaScript 的语言来写 JavaScript 代码有哪些优缺点？
+
+TypeScript 语法严谨, 缺点是还需要学习一下typescript的用法以及编译工具的用法
+
 * 你使用哪些工具和技术来调试 JavaScript 代码？
+
+Chrome 浏览器的debug 配合console.log的输出
+
 * 你会使用怎样的语言结构来遍历对象属性 (object properties) 和数组内容？
+
+for in 、for、 map
+
 * 请解释可变 (mutable) 和不变 (immutable) 对象的区别。
-  * 请举出 JavaScript 中一个不变性对象 (immutable object) 的例子？
-  * 不变性 (immutability) 有哪些优缺点？
-  * 如何用你自己的代码来实现不变性 (immutability)？
+
+js中的对象是可变的, 如果想不变 可以用 Object.freeze(obj) 去冻结对象的原始值, 达到不可修改
+
+* 请举出 JavaScript 中一个不变性对象 (immutable object) 的例子？
+
+immutable.js可创建不变的对象, 深拷贝对象时 要比lodash.clonedeep高效
+
+* 不变性 (immutability) 有哪些优缺点？
+* 如何用你自己的代码来实现不变性 (immutability)？
 * 请解释同步 (synchronous) 和异步 (asynchronous) 函数的区别。
+
+同步函数是阻塞的, 异步函数是非阻塞的
+
 * 什么是事件循环 (event loop)？
-  * 请问调用栈 (call stack) 和任务队列 (task queue) 的区别是什么？
+
+在js执行异步函数的时候, 工作线程会执行异步任务, 执行完成后把对应的callback封装成消息添加消息队列, 等待js主线程完成了当前循环中的代码, 主线程会轮询工作线程中的消息队列(callback回调函数), 并执行
+
+* 请问调用栈 (call stack) 和任务队列 (task queue) 的区别是什么？
+
+call stack 当前主线程代码执行完毕后才会去执行 task queue 队列中的代码
+
 * 解释 `function foo() {}` 与 `var foo = function() {}` 用法的区别
+
+区别是变量提升 foo 函数会在提升的时候赋值为函数对象, 而var foo在变量提升的时候会赋值undefined 用法是一样的, 表达式创建的函数。不可以预先在表达式声明之前调用
 
 #### <a name='testing-questions'>测试相关问题：</a>
 
