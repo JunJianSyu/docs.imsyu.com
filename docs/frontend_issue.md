@@ -513,6 +513,7 @@ load 是等页面dom元素解析完毕,等待加载图片和外部文件后执�
 单页应用利于搜索引擎检索
 
 * 你使用过 Promises 及其 polyfills 吗? 请写出 Promise 的基本用法（ES6）。
+
 ```javascript
 var _promise = new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest()
