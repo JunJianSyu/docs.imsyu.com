@@ -25,6 +25,18 @@ yum install python-setuptools && easy_install pip
 pip install shadowsocks
 ```
 
+```bash
+// ContOS 遇到端口防火墙问题
+yum install firewalld
+// gui
+yum install firewall-config
+// 允许 tpc/udp:8080 开启 dmz级别
+firewall-cmd --zone=dmz --add-port=8080/tcp
+firewall-cmd --zone=dmz --add-port=8080/udp
+// 启动服务 -> restart vps
+systemctl enable firewalld        # 开机启动
+```
+
 用法:
 创建`config`文件 `/etc/shadowsocks.json` Example:
 
