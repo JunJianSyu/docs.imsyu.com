@@ -4,4 +4,5 @@
 - [排序算法集锦](sort_ALG.md)
 - [Promise异步魔法](promise.md)
 - [WebAssembly技术](webAssembly.md)
+- [Flex布局](flex.md)
 - [藏经阁](books.md)
