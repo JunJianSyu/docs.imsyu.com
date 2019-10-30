@@ -60,6 +60,8 @@ systemctl enable firewalld        # 开机启动
 ssserver -c /etc/shadowsocks.json
 ```
 
+运行失败报错，原因有2种：端口被占用、源码依赖版本不对
+
 后台运行:
 
 ```bash
