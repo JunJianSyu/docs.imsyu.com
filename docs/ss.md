@@ -19,7 +19,7 @@ Python Example:
 ```bash
 // Debian/Ubuntu
 apt-get install python-pip
-pip install shadowsocks
+pip install shadowsocks or pip3 install https://github.com/shadowsocks/shadowsocks/archive/master.zip
 // ContOS:
 yum install python-setuptools && easy_install pip
 pip install shadowsocks
@@ -35,6 +35,18 @@ firewall-cmd --zone=dmz --add-port=8080/tcp
 firewall-cmd --zone=dmz --add-port=8080/udp
 // 启动服务 -> restart vps
 systemctl enable firewalld        # 开机启动
+```
+
+```bash
+// error
+locale.Error: unsupported locale setting
+
+export LC_ALL=C
+
+// error
+importerror "No Module named Setuptools"
+
+sudo apt-get install python3-setuptools
 ```
 
 用法:
