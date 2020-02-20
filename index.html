@@ -1,29 +1,40 @@
-﻿<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
-    <title>塞尔达传说-地图</title>
-    <script src="Content/jquery-2.2.0.js"></script>
-    <script src="Content/Leaflet/leaflet-src.js"></script>
-    <link href="Content/Leaflet/leaflet.css" rel="stylesheet" />
-    <script src="Content/ShrinesJapanese.js"></script>
-    <link href="Content/Main.min.css" rel="stylesheet" />
-    <script src="Content/Catalog.js"></script>
-    <script src="Content/Marker.js"></script>
-    <script src="Content/Main.js"></script>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="description" content="Description">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
 </head>
 <body>
-    <div id="TypeSwitch">
-        <strong>类型筛选</strong>
-        <ul></ul>
-    </div>
-    <div id="NameSearch">
-        <input id="KeyWords" type="text" value="" placeholder="搜索" />
-        <span id="ClearKeyword" class="clear">清除</span>
-    </div>
-    <div id="MapContainer">
-
-    </div>
+<div id="app"></div>
 </body>
+<script>
+    window.$docsify = {
+        basePath: './docs',
+        loadSidebar: true,
+        repo: 'https://github.com/JunJianSyu/docs.imsyu.com',
+        // 完整配置参数
+        search: {
+            maxAge: 86400000, // 过期时间，单位毫秒，默认一天
+            paths: [], // or 'auto'
+            placeholder: 'Type to search',
+            // 支持本地化
+            placeholder: {
+                '/': 'Type to search'
+            },
+            noData: 'No Results!',
+            // 支持本地化
+            noData: {
+                '/': 'No Results'
+            }
+        }
+    }
+</script>
+<script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+<script src="//unpkg.com/docsify/lib/plugins/search.js"></script>
+<script src="//unpkg.com/docsify/lib/plugins/emoji.js"></script>
+<script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
+<script src="//unpkg.com/prismjs/components/prism-python.min.js"></script>
 </html>
